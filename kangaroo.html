@@ -1,0 +1,99 @@
+<html>
+	<title>Kangaroo</title>
+	<head>
+		<style>
+			table, tr {
+			border: 1px solid black;
+			width : 500px;
+			}
+			table {
+			width : 100%;
+			}
+			h3 {
+			width : 100%;
+			text-align : center;
+			}
+		</style>
+		<script>
+			function calculateLocation(){
+				var x1 = document.getElementById("x1").value;
+				var x2 = document.getElementById("x2").value;
+				var y1 = document.getElementById("y1").value;
+				var y2 = document.getElementById("y2").value;
+				var maxLimit = 10000;
+				if(x1 == ''){
+					alert("X1 position should not be empty");
+					return false;
+				}
+				if(x2 == ''){
+					alert("X2 position should not be empty");
+					return false;
+				}
+				/*if(Number(x1) > Number(x2)){
+				alert("X1 should not be greater than X2");
+				return false;
+				}*/
+				
+				if(y1 < 1){
+					alert("Y1 position should be greater than or equal to 1");
+					return false;
+				}
+				if(y2 < 1){
+					alert("Y2 position should be greater than or equal to 1");
+					return false;
+				}		 
+				 
+				if(x1 > maxLimit || x2 > maxLimit  || y1 > maxLimit || y2 > maxLimit ){
+					alert("All position should be greater than or equal to 10000");
+					return false;
+				}
+				var outputLable = "NO";
+				var firstKangarooPoints = [];
+				var calcPoints;
+				var x1Temp = Number(x1);
+				var x2Temp = Number(x2);
+				var y1Temp = Number(y1);
+				var y2Temp = Number(y2);
+				var jumpCount= 0;
+				while(x1Temp <= maxLimit){
+					jumpCount++;
+					calcPoints = x1Temp+y1Temp;
+					calcPoints = calcPoints+"_"+jumpCount;
+					firstKangarooPoints.push(calcPoints);
+					x1Temp = x1Temp+y1Temp;
+				}
+				jumpCount= 0;
+				while(x2Temp <= maxLimit){
+				jumpCount++;
+				calcPoints = x2Temp+y2Temp;
+				calcPoints = calcPoints+"_"+jumpCount;
+				if(firstKangarooPoints.indexOf(calcPoints) != -1){
+				var lablePoint = x2Temp+y2Temp;
+				outputLable = "Yes they will meet at point("+lablePoint+") in "+jumpCount+"th jump";
+				break;
+				}
+					x2Temp = x2Temp+y2Temp;
+				}
+				
+				document.getElementById("output").innerHTML = outputLable;
+			}
+		</script>
+	</head>
+	<body>
+	
+	<h3>Logical Questions - Kangaroo</h3>
+	<table>
+	<tr> 
+	<td>X1: <input type="number" id="x1" name="x1" max=10000></td>
+	<td>Y1: <input type="number" id="y1" name="y1" min=1 max=10000></td>
+	<td rowspan=2>
+	<button type="button" onclick="calculateLocation()">Calculate location</button></td>
+	<td rowspan=2>
+Output:<span id = "output" >-</span></td>
+	</tr>
+	<tr> 
+	<td>X2: <input type="number" id = "x2" name="x2" max=10000></td>
+	<td>Y2: <input type="number" id = "y2" name="y2" min=1 max=10000> </td>
+	</tr>
+	</body>
+</html>
